@@ -1,0 +1,88 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+bool checkNext(string s, string number, int location, int digitSize){
+    
+    if(location == s.size()){
+        return true;
+    }
+    if(digitSize > s.size() - location){
+        return false;
+    }
+    
+    int n = stoi(number);
+    int nx = n + 1;
+    string shouldBeNumber = to_string(nx);
+    int newDigitSize = shouldBeNumber.size();
+    string nextNumber = s.substr(location, newDigitSize);
+    
+    if(nextNumber[0] == '0'){
+        return false;
+    }
+    
+    if(shouldBeNumber == nextNumber){
+        location = location + newDigitSize;
+        if(checkNext(s, nextNumber, location, newDigitSize)){
+            return true;
+        }
+    } 
+    return false;
+}
+int main(){
+    int q;
+    cin >> q;
+    for(int a0 = 0; a0 < q; a0++){
+        string s;
+        cin >> s;
+        
+        if(s.size() == 1){
+            cout << "NO\n";
+            continue;
+        }
+        else if(s.size() == 2){
+            int n = (int)s[0];
+            int nx = (int)s[1];
+            
+            if((n+1) == nx){
+                cout << "YES " << s[0] << endl;
+                continue;
+            }
+            else{
+                cout << "NO\n";
+                continue;
+            }
+        }
+        else if(s[0] == '0'){
+            cout << "NO\n";
+            continue;
+        }
+        bool solution = false;
+        int size = s.size();
+        int max = 0;
+        int digitSize = 1;
+        
+        if(size % 2 == 0){
+            max = size/2;
+        }
+        else{
+            max = size/2 + 1;
+        }
+        
+        for(digitSize = 1; digitSize < max; digitSize++){
+            
+            string number = s.substr(0,digitSize);
+            if(checkNext(s, number, digitSize, digitSize)){
+                cout << "YES " << number << endl;
+                solution = true;
+                break;
+            }
+        }
+        
+        if(!solution){
+            cout << "NO\n";
+        }
+        // your code goes here
+    }
+    return 0;
+}

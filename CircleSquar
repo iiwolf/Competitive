@@ -1,0 +1,45 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int pixelDistance(int x1, int y1, int x2, int y2){
+	int xTerm = (x1 - x2)^2;
+	int yTerm = (y1 - y2)^2;
+	
+	return sqrt(xTerm + yTerm);
+}
+int main(){
+    int w;
+    int h;
+    cin >> w >> h;
+    int circleX;
+    int circleY;
+    int r;
+    cin >> circleX >> circleY >> r;
+    int x1;
+    int y1;
+    int x3;
+    int y3;
+    cin >> x1 >> y1 >> x3 >> y3;
+    // your code goes here
+	
+	for(int y = 0; y < h; y++){
+		for(int x = 0; x < w; x++){
+			if(y == circleY && x == circleX){
+                cout << "#";
+            }
+			else if(pixelDistance(x, y, circleX, circleY) <= r){
+				cout << "#";
+			}
+            else if(y == y1 && x == x1
+                   || y == y3 && x == x3){
+                cout << "#";
+            }
+            else{
+            cout << ".";
+            }
+        }
+		cout << endl;
+	}
+    return 0;
+}
